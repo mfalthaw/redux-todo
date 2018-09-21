@@ -1,11 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Redux Todo</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Redux Todo</title>
 </head>
 <body>
-    
+  <input id="todo" type="text">
+  <button id="submit-todo">Submit</button>
+  <div id="container"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.0/redux.min.js"></script>
+
+  <script>
+    const reducer = Redux.combineReducers({
+      todos: () => {
+        return ['groceries', 'make dinner', 'workout'];
+      }
+    });
+
+    const store = Redux.createStore(reducer);
+    const render = () => {
+      const container = document.getElementById('container');
+      container.innerHTML = '';
+      const state = store.getState();
+      state.todos.forEach((todo) => {
+        const e = document.createElement('div');
+        e.innerHTML = todo;
+        container.appendChild(e);
+      });
+    };
+
+    render();
+  </script>
 </body>
 </html>
