@@ -12,13 +12,22 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.0/redux.min.js"></script>
 
   <script>
+    // reducer
     const reducer = Redux.combineReducers({
-      todos: () => {
-        return ['groceries', 'make dinner', 'workout'];
+      todos: (state = [], action) => {
+        const newState = Object.assign([], state);
+        if (action.type === 'add') {
+          newState.push(action.item);
+        }
+
+        return newState;
       }
     });
 
+    // store
     const store = Redux.createStore(reducer);
+    
+    // render method
     const render = () => {
       const container = document.getElementById('container');
       container.innerHTML = '';
@@ -30,7 +39,16 @@
       });
     };
 
-    render();
+    // append items to list on submit
+    document.getElementById('submit-todo').onclick = () => {
+      store.dispatch({
+        type: 'add',
+        item: document.getElementById('todo').value,
+      });
+
+      // update page
+      render();
+    };
   </script>
 </body>
 </html>
